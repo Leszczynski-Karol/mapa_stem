@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Mapa STEM</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+    }
+    #map {
+      height: 650px;
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      border: 2px solid #ddd;
+    }
+    .leaflet-tooltip {
+      background: white;
+      border: 1px solid #ccc;
+      color: #333;
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 4px 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .pulse {
+      background: rgba(255,77,77,0.8);
+      border-radius: 50%;
+      height: 16px;
+      width: 16px;
+      position: relative;
+      box-shadow: 0 0 8px rgba(255,77,77,0.8);
+    }
+    .pulse::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(255,77,77,0.4);
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(2.5); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map').setView([45, 20], 4);
+
+    L.tileLayer('https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>, &copy; <a href="https://carto.com/">CARTO</a>'
+    }).addTo(map);
+
+    var places = [
+      { name: "Brzesko", coords: [49.969, 20.606], info: "Brzesko" },
+      { name: "Obóz Auschwitz-Birkenau", coords: [50.035, 19.178], info: "Auschwitz-Birkenau" },
+      { name: "Kraków", coords: [50.0647, 19.9450], info: "Kraków " },
+      { name: "Warszawa", coords: [52.2297, 21.0122], info: "Warszawa " },
+      { name: "Zalipie", coords: [50.238, 20.892], info: "Zalipie " },
+      { name: "Adana", coords: [37.0, 35.3213], info: "Adana " },
+      { name: "Gaziantep", coords: [37.0662, 37.3833], info: "Gaziantep " },
+      { name: "Bukareszt", coords: [44.4268, 26.1025], info: "Bukareszt" },
+      { name: "Göbekli Tepe", coords: [37.223, 38.922], info: "Göbekli Tepe " },
+      { name: "Antwerpia", coords: [51.2194, 4.4025], info: "Antwerpia" }
+    ];
+
+    places.forEach(function(place) {
+      var pulsingIcon = L.divIcon({
+        className: 'pulse',
+        iconSize: [16,16]
+      });
+
+      var marker = L.marker(place.coords, { icon: pulsingIcon }).addTo(map);
+
+      marker.bindPopup("<b style='font-size:15px;'>" + place.name + "</b><br>" + place.info);
+      marker.bindTooltip(place.name, { direction: "top" });
+    });
+  </script>
+  <p>Copyright Karol Leszczyński 2025. All rights reserved.</p>
+</body>
+</html>
