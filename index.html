@@ -28,6 +28,7 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
 
+    /* Pulsujące kropki */
     .pulse {
       background: rgba(255,77,77,0.8);
       border-radius: 50%;
@@ -54,6 +55,7 @@
   </style>
 </head>
 <body>
+  <h2 style="text-align:center; margin-bottom:20px; color:#333;">Mapa miejsc STEM</h2>
   <div id="map"></div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -65,22 +67,23 @@
     }).addTo(map);
 
     var places = [
-      { name: "Brzesko", coords: [49.969, 20.606], info: "Brzesko" },
-      { name: "Obóz Auschwitz-Birkenau", coords: [50.035, 19.178], info: "Auschwitz-Birkenau" },
-      { name: "Kraków", coords: [50.0647, 19.9450], info: "Kraków " },
-      { name: "Warszawa", coords: [52.2297, 21.0122], info: "Warszawa " },
-      { name: "Zalipie", coords: [50.238, 20.892], info: "Zalipie " },
-      { name: "Adana", coords: [37.0, 35.3213], info: "Adana " },
-      { name: "Gaziantep", coords: [37.0662, 37.3833], info: "Gaziantep " },
-      { name: "Bukareszt", coords: [44.4268, 26.1025], info: "Bukareszt" },
-      { name: "Göbekli Tepe", coords: [37.223, 38.922], info: "Göbekli Tepe " },
-      { name: "Antwerpia", coords: [51.2194, 4.4025], info: "Antwerpia" }
+      { name: "Brzesko", coords: [49.969, 20.606], info: "Brzesko – miasto w Małopolsce znane z browaru Okocim." },
+      { name: "Obóz Auschwitz-Birkenau", coords: [50.035, 19.178], info: "Auschwitz-Birkenau – największy nazistowski obóz koncentracyjny." },
+      { name: "Kraków", coords: [50.0647, 19.9450], info: "Kraków – dawna stolica Polski, z Wawelem i Sukiennicami." },
+      { name: "Warszawa", coords: [52.2297, 21.0122], info: "Warszawa – stolica Polski, odbudowana po II wojnie światowej." },
+      { name: "Zalipie", coords: [50.238, 20.892], info: "Zalipie – wieś znana z malowania domów w kwiaty." },
+      { name: "Adana", coords: [37.0, 35.3213], info: "Adana – tureckie miasto słynące z kebaba Adana." },
+      { name: "Gaziantep", coords: [37.0662, 37.3833], info: "Gaziantep – miasto w Turcji znane z baklawy." },
+      { name: "Bukareszt", coords: [44.4268, 26.1025], info: "Bukareszt – stolica Rumunii, nazywana Małym Paryżem." },
+      { name: "Göbekli Tepe", coords: [37.223, 38.922], info: "Göbekli Tepe – najstarsza znana świątynia świata w Turcji." },
+      { name: "Antwerpia", coords: [51.2194, 4.4025], info: "Antwerpia – belgijskie miasto portowe znane z diamentów." }
     ];
 
     places.forEach(function(place) {
       var pulsingIcon = L.divIcon({
         className: 'pulse',
-        iconSize: [16,16]
+        iconSize: [16,16],
+        iconAnchor: [8,8] // kotwiczenie w środku
       });
 
       var marker = L.marker(place.coords, { icon: pulsingIcon }).addTo(map);
@@ -89,6 +92,5 @@
       marker.bindTooltip(place.name, { direction: "top" });
     });
   </script>
-  <p>Copyright Karol Leszczyński 2025. All rights reserved.</p>
 </body>
 </html>
